@@ -40,6 +40,11 @@ python cs285/scripts/run_hw1.py \
 	--video_log_freq -1
 ```
 
+```
+--expert_policy_file ../policies/experts/Ant.pkl --env_name AntBulletEnv-v0 --exp_name bc_ant --n_iter 1
+--expert_data ../expert_data/expert_data_Ant-v2.pkl --video_log_freq -1
+```
+
 Make sure to also try another environment.
 See the homework PDF for more details on what else you need to run.
 To generate videos of the policy, remove the `--video_log_freq -1` flag.

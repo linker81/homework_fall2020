@@ -80,11 +80,13 @@ class MLPPolicy(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
         else:
             observation = obs[None]
 
+        action = self.forward(observation)
         # TODO return the action that the policy prescribes
-        raise NotImplementedError
+        return action
 
     # update/train this policy
     def update(self, observations, actions, **kwargs):
+        self.mean_net.train(observations, actions)
         raise NotImplementedError
 
     # This function defines the forward pass of the network.
@@ -109,7 +111,9 @@ class MLPPolicySL(MLPPolicy):
             adv_n=None, acs_labels_na=None, qvals=None
     ):
         # TODO: update the policy and return the loss
-        loss = TODO
+
+        action_predicted = self.get_action(observations)
+        loss = self.loss(action_predicted, actions)
         return {
             # You can add extra logging information here, but keep this line
             'Training Loss': ptu.to_numpy(loss),
