@@ -46,6 +46,7 @@ def build_mlp(
         output_activation = _str_to_activation[output_activation]
 
     # TODO - Rendere generica
+    # Ordered Dict...
     model = nn.Sequential(
         nn.Linear(input_size, size),
         activation,
@@ -54,6 +55,8 @@ def build_mlp(
         nn.Linear(size, output_size),
         output_activation
     )
+
+    print(model)
 
     # TODO: return a MLP. This should be an instance of nn.Module
     # Note: nn.Sequential is an instance of nn.Module.
