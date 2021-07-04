@@ -46,7 +46,7 @@ class PGAgent(BaseAgent):
 
         # TODO: step 3: use all datapoints (s_t, a_t, q_t, adv_t) to update the PG actor/policy
         ## HINT: `train_log` should be returned by your actor update method
-        train_log = TODO
+        train_log = self.actor.update(observations, actions, advantages, q_values)
 
         return train_log
 
@@ -129,8 +129,16 @@ class PGAgent(BaseAgent):
         """
 
         # TODO: create list_of_discounted_returns
+        # AB: Not Optimized
+        list_of_discounted_returns = []
         # Hint: note that all entries of this output are equivalent
             # because each sum is from 0 to T (and doesnt involve t)
+        discounted_return = 0
+        T = len(rewards)
+        for t in range(0, T):
+            discounted_return += (self.gamma ** t) * rewards[t]
+        for t in range(0, T):
+            list_of_discounted_returns.append(discounted_return)
 
         return list_of_discounted_returns
 
@@ -146,6 +154,17 @@ class PGAgent(BaseAgent):
             # because the summation happens over [t, T] instead of [0, T]
         # HINT2: it is possible to write a vectorized solution, but a solution
             # using a for loop is also fine
+
+        # AB: Not Optimized
+        list_of_discounted_cumsums = []
+
+        discounted_return = 0
+        T = len(rewards)
+        for t in range(0, T):
+            list_of_discounted_cumsums_tmp = 0
+            for t_1 in range(t, T):
+                list_of_discounted_cumsums_tmp += (self.gamma ** t_1) * rewards[t_1]
+            list_of_discounted_cumsums.append(list_of_discounted_cumsums_tmp)
 
         return list_of_discounted_cumsums
 
