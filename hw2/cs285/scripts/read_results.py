@@ -1,5 +1,6 @@
 import glob
 import tensorflow as tf
+import matplotlib.pyplot as plt
 
 def get_section_results(file):
     """
@@ -17,10 +18,17 @@ def get_section_results(file):
 
 if __name__ == '__main__':
     import glob
+    import sys
 
-    logdir = 'data/q1_lb_rtg_na_CartPole-v0_13-09-2020_23-32-10/events*'
+    logdir = sys.argv[1]
     eventfile = glob.glob(logdir)[0]
 
     X, Y = get_section_results(eventfile)
     for i, (x, y) in enumerate(zip(X, Y)):
         print('Iteration {:d} | Train steps: {:d} | Return: {}'.format(i, int(x), y))
+
+    plt.figure()
+    plt.plot(X,Y)
+    plt.xlabel('Steps')
+    plt.ylabel('Average Return')
+    plt.show()

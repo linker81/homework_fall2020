@@ -107,11 +107,14 @@ def sample_trajectories(env, policy, min_timesteps_per_batch, max_path_length, r
         path = sample_trajectory(env, policy, max_path_length, render=render, render_mode=render_mode)
         paths.append(path)
         timesteps_this_batch += get_pathlength(path)
+
     return paths, timesteps_this_batch
 
 def sample_n_trajectories(env, policy, ntraj, max_path_length, render=False, render_mode=('rgb_array')):
     # TODO: get this from hw1
-    paths = sample_trajectory(env, policy, n - ntraj, max_path_length, render, render_mode)
+    paths = []
+    for _ in range(ntraj):
+        paths.append(sample_trajectory(env, policy, max_path_length, render, render_mode))
 
     return paths
 
