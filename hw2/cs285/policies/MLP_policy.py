@@ -139,6 +139,8 @@ class MLPPolicyPG(MLPPolicy):
         # HINT2: you will want to use the `log_prob` method on the distribution returned
             # by the `forward` method
         log_pa_action = actions_distr.log_prob(actions)
+
+        # GROUP: If there is the baseline, advantages is: Q_t - b_t
         tmp = log_pa_action * advantages
         # log_loss = torch.sum(tmp)
         log_loss = torch.mean(tmp)
@@ -174,9 +176,9 @@ class MLPPolicyPG(MLPPolicy):
 
             # TODO: optimize `baseline_loss` using `self.baseline_optimizer`
             # HINT: remember to `zero_grad` first
-            self.optimizer.zero_grad()
+            self.baseline_optimizer.zero_grad()
             baseline_loss.backward()
-            self.optimizer.step()
+            self.baseline_optimizer.step()
 
         train_log = {
             'Training Loss': ptu.to_numpy(loss),

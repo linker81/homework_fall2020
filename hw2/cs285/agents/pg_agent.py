@@ -101,8 +101,9 @@ class PGAgent(BaseAgent):
         if self.standardize_advantages:
             ## TODO: standardize the advantages to have a mean of zero
             ## and a standard deviation of one
-            ## HINT: there is a `normalize` function in `infrastructure.utils`
-            advantages = TODO
+            ## HINT: there is a `normalize` function in `infrastructure.from cs285.infrastructure import utils as ut
+            from cs285.infrastructure import utils as ut
+            advantages = ut.normalize(advantages, np.mean(advantages), np.std(advantages))
 
         return advantages
 
